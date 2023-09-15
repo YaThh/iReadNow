@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "730176559198",
+    "project_id": "ireadnow-30b83",
+    "storage_bucket": "ireadnow-30b83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730176559198:android:5faa7309438d6cba813ccf",
+        "android_client_info": {
+          "package_name": "com.example.ungdungdocsach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtJpQUb1Qdi8VsVqL-burylckpYLMi-nY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
