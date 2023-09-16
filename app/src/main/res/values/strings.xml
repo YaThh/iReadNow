@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">UngDungDocSach</string>
+    <string name="login">ĐĂNG NHẬP</string>
+    <string name="continue_without_login">Tiếp tục mà không cần đăng nhập</string>
+    <string name="no_account">Chưa có tài khoản?</string>
+    <string name="register">Đăng ký</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="password">Mật khẩu</string>
+    <string name="email">Email</string>
 </resources>
