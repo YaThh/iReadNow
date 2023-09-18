@@ -35,7 +35,8 @@
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="225dp">
+        android:layout_marginTop="225dp"
+        android:layout_above="@+id/ll_no_account">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -118,6 +119,7 @@
 
     <!-- Dang ky-->
     <LinearLayout
+        android:id="@+id/ll_no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -134,7 +136,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_marginStart="-16dp"
-            android:text="@string/register"
+            android:text="@string/register_bold"
             android:textColor="@color/orange_main" />
     </LinearLayout>
 

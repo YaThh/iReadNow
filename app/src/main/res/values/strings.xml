@@ -3,8 +3,11 @@
     <string name="login">ĐĂNG NHẬP</string>
     <string name="continue_without_login">Tiếp tục mà không cần đăng nhập</string>
     <string name="no_account">Chưa có tài khoản?</string>
+    <string name="register_bold"><b>Đăng ký</b></string>
     <string name="register">Đăng ký</string>
+    <string name="create_account">TẠO TÀI KHOẢN</string>
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="password">Mật khẩu</string>
     <string name="email">Email</string>
+    <string name="confirm_password">Nhập lại mật khẩu</string>
 </resources>
