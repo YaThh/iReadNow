@@ -31,7 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding binding;
 
     private FirebaseAuth auth;
-    private DatabaseReference rootRef;
     private FirebaseFirestore db;
 
     private Dialog registerProgress;
@@ -43,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         //Khoi tao auth
         auth = FirebaseAuth.getInstance();
-        rootRef = FirebaseDatabase.getInstance().getReference();
         db = FirebaseFirestore.getInstance();
 
         //Setup progress dialog
@@ -124,26 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
         hashMap.put("userType", "user"); //User va admin
         hashMap.put("timestamp", timestamp);
 
-
-//        //Luu du lieu vao db
-//        DatabaseReference userRef = rootRef.child("User").child(auth.getCurrentUser().getUid());
-//        userRef.setValue(hashMap)
-//        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void unused) {
-//                registerProgress.dismiss();
-//                Toast.makeText(RegisterActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(RegisterActivity.this, DashboardUserActivity.class));
-//                finish();
-//            }
-//        })
-//        .addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                registerProgress.dismiss();
-//                Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         CollectionReference userInfoRef = db.collection("User").document(uid)
                 .collection("UserInfo");

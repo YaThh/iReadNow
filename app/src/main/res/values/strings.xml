@@ -10,4 +10,7 @@
     <string name="password">Mật khẩu</string>
     <string name="email">Email</string>
     <string name="confirm_password">Nhập lại mật khẩu</string>
+    <string name="saving_data">Đang lưu thông tin</string>
+    <string name="creating_account">Đang tạo tài khoản</string>
+    <string name="logging_in">Đang đăng nhập</string>
 </resources>
