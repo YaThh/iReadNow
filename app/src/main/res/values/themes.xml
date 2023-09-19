@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.UngDungDocSach" parent="Base.Theme.UngDungDocSach" />
+
+    <style name="CircularProgress" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/orange_main</item>
+    </style>
 </resources>
