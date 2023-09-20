@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_centerHorizontal="true"
-            android:text="Bảng điều khiển"
+            android:text="@string/dashboard"
             android:textStyle="bold"
             android:textColor="@color/white"/>
 
@@ -49,5 +49,41 @@
             android:src="@drawable/ic_logout_gray" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <!-- Them danh muc-->
+        <Button
+            android:id="@+id/btn_add_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm Danh Mục"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/shape_button1"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:minHeight="50dp"/>
+
+        <!--Them pdf-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_add_pdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pdf_white"
+            android:tint="@color/white"
+            app:fabCustomSize="50dp"
+            android:backgroundTint="@color/orange_main"/>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

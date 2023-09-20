@@ -19,7 +19,7 @@ tools:context=".DashboardUserActivity">
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
-        android:text="Bảng điều khiển"
+        android:text="@string/dashboard"
         android:textStyle="bold"
         android:textColor="@color/white"/>
 

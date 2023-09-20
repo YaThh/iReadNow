@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">UngDungDocSach</string>
-    <string name="login">ĐĂNG NHẬP</string>
+    <string name="login">Đăng Nhập</string>
     <string name="continue_without_login">Tiếp tục mà không cần đăng nhập</string>
     <string name="no_account">Chưa có tài khoản?</string>
     <string name="register_bold"><b>Đăng ký</b></string>
     <string name="register">Đăng ký</string>
-    <string name="create_account">TẠO TÀI KHOẢN</string>
+    <string name="create_account">Tạo Tài Khoản</string>
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="password">Mật khẩu</string>
     <string name="email">Email</string>
@@ -13,4 +13,7 @@
     <string name="saving_data">Đang lưu thông tin</string>
     <string name="creating_account">Đang tạo tài khoản</string>
     <string name="logging_in">Đang đăng nhập</string>
+    <string name="dashboard">Bảng Điều Khiển</string>
+    <string name="add_category">Thêm Danh Mục</string>
+    <string name="adding_category">Đang thêm danh mục</string>
 </resources>
