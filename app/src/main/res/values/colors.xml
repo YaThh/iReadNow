@@ -4,8 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_dark">#919191</color>
     <color name="gray">#CCCCCC</color>
+    <color name="gray_light">#EDEDED</color>
     <color name="orange_main">#E87121</color>
     <color name="orange_dark">#8C4616</color>
     <color name="blue_main">#527DFF</color>
     <color name="blue_dark">#324C9A</color>
+    <color name="gray_dark">#868686</color>
 </resources>

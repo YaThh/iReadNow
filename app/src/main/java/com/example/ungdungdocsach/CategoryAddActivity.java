@@ -82,7 +82,7 @@ public class CategoryAddActivity extends AppCompatActivity {
         hashMap.put("category", category);
         hashMap.put("uid", auth.getUid());
 
-        //Them vao firebase
+        //Them vao db
         CollectionReference categoryRef = db.collection("Category");
         categoryRef.add(hashMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

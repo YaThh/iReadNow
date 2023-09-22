@@ -7,6 +7,7 @@
     android:background="@drawable/back01"
     tools:context=".DashboardAdminActivity">
 
+    <!--Toolbar-->
     <RelativeLayout
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
@@ -49,6 +50,17 @@
             android:src="@drawable/ic_logout_gray" />
 
     </RelativeLayout>
+
+    <!--Danh muc-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_toolbar"
+        tools:listitem="@layout/rec_category"
+        android:layout_margin="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_above="@+id/ll_bottom"/>
 
     <LinearLayout
         android:id="@+id/ll_bottom"
