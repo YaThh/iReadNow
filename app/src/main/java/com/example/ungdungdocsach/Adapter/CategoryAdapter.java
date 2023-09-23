@@ -1,17 +1,27 @@
 package com.example.ungdungdocsach.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ungdungdocsach.Model.Category;
 import com.example.ungdungdocsach.databinding.RecCategoryBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -19,6 +29,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     @NonNull
     private Context context;
     private List<Category> categoryList;
+    private FirebaseFirestore db;
     private RecCategoryBinding binding;
 
     public CategoryAdapter(@NonNull Context context, List<Category> categoryList) {
@@ -30,6 +41,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     @Override
     public HolderCategory onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = RecCategoryBinding.inflate(LayoutInflater.from(context), parent, false);
+        db = FirebaseFirestore.getInstance();
 
         return new HolderCategory(binding.getRoot());
     }
@@ -49,9 +61,53 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Xoá")
+                        .setMessage("Xoá danh mục này?")
+                        .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteCategory(categoryModel, holder);
+                            }
+                        })
+                        .setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
+                            }
+                        })
+                        .show();
             }
         });
+    }
+
+
+    private void deleteCategory(Category categoryModel, HolderCategory holder) {
+        String id = categoryModel.getId();
+        CollectionReference cateRef = db.collection("Category");
+
+        cateRef.whereEqualTo("id", id)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            documentSnapshot.getReference().delete();
+                            int position = categoryList.indexOf(categoryModel);
+                            if (position != -1) {
+                                categoryList.remove(position);
+                                notifyItemRemoved(position);
+                            }
+                        }
+                        Toast.makeText(context, "Xoá thành công", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override

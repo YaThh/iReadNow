@@ -1,11 +1,16 @@
 package com.example.ungdungdocsach;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.ungdungdocsach.Adapter.CategoryAdapter;
@@ -40,10 +45,20 @@ public class DashboardAdminActivity extends AppCompatActivity {
         binding = ActivityDashboardAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Set progressbar
+        binding.pBarAdmin.setVisibility(View.VISIBLE);
+        binding.recCategory.setVisibility(View.GONE);
+
         //Khoi tao auth
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         checkUser();
+
+        //Setup adapter
+        categoryList = new ArrayList<>();
+        categoryAdapter = new CategoryAdapter(DashboardAdminActivity.this, categoryList);
+        binding.recCategory.setAdapter(categoryAdapter);
+
         loadCategory();
 
         //Su kien logout
@@ -59,13 +74,13 @@ public class DashboardAdminActivity extends AppCompatActivity {
         binding.btnAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardAdminActivity.this, CategoryAddActivity.class));
+                Intent i = new Intent(DashboardAdminActivity.this, CategoryAddActivity.class);
+                addCategoryLauncher.launch(i);
             }
         });
     }
 
     private void loadCategory() {
-        categoryList = new ArrayList<>();
         CollectionReference cateRef = db.collection("Category");
 
         cateRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -77,9 +92,10 @@ public class DashboardAdminActivity extends AppCompatActivity {
                     Category category = documentSnapshot.toObject(Category.class);
                     categoryList.add(category);
                 }
-                //Setup adapter
-                categoryAdapter = new CategoryAdapter(DashboardAdminActivity.this, categoryList);
-                binding.recCategory.setAdapter(categoryAdapter);
+
+                categoryAdapter.notifyDataSetChanged();
+                binding.pBarAdmin.setVisibility(View.GONE);
+                binding.recCategory.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -102,4 +118,11 @@ public class DashboardAdminActivity extends AppCompatActivity {
             binding.tvSubTitle.setText(email);
         }
     }
+
+    private final ActivityResultLauncher<Intent> addCategoryLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == Activity.RESULT_OK) {
+            loadCategory();
+        }
+    });
 }

@@ -1,16 +1,27 @@
 package com.example.ungdungdocsach.Model;
 
+import java.io.Serializable;
+
 public class Category {
-    String category, uid;
+    String id, category, uid;
     long timestamp;
 
     public Category() {
     }
 
-    public Category(String category, String uid, long timestamp) {
+    public Category(String id, String category, String uid, long timestamp) {
+        this.id = id;
         this.category = category;
         this.uid = uid;
         this.timestamp = timestamp;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCategory() {

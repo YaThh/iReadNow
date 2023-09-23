@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ungdungdocsach.Adapter.CategoryAdapter;
 import com.example.ungdungdocsach.databinding.ActivityCategoryAddBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,7 +28,7 @@ public class CategoryAddActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-
+    private CategoryAdapter categoryAdapter;
     private Dialog addCategoryProgress;
 
     @Override
@@ -43,6 +45,7 @@ public class CategoryAddActivity extends AppCompatActivity {
         addCategoryProgress = new Dialog(CategoryAddActivity.this);
         addCategoryProgress.setContentView(R.layout.dialog_add_category);
         addCategoryProgress.setCancelable(false);
+
 
         //Su kien back
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +81,7 @@ public class CategoryAddActivity extends AppCompatActivity {
 
         //Setup du lieu cho danh muc
         HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", String.valueOf(timestamp));
         hashMap.put("timestamp", timestamp);
         hashMap.put("category", category);
         hashMap.put("uid", auth.getUid());
@@ -89,6 +93,9 @@ public class CategoryAddActivity extends AppCompatActivity {
             public void onSuccess(DocumentReference documentReference) {
                 addCategoryProgress.dismiss();
                 Toast.makeText(CategoryAddActivity.this, "Thêm danh mục thành công",Toast.LENGTH_SHORT).show();
+
+                Intent resultIntent = new Intent();
+                setResult(RESULT_OK, resultIntent);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

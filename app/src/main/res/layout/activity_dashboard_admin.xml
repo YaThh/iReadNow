@@ -50,6 +50,18 @@
             android:src="@drawable/ic_logout_gray" />
 
     </RelativeLayout>
+    
+    <!--Progress bar-->
+    <com.rey.material.widget.ProgressView
+        android:id="@+id/pBar_admin"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerInParent="true"
+        app:pv_circular="true"
+        app:pv_autostart="true"
+        app:pv_progressStyle="@style/CircularProgress"
+        app:pv_progressMode="indeterminate"
+        />
 
     <!--Danh muc-->
     <androidx.recyclerview.widget.RecyclerView
