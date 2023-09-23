@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ungdungdocsach.Filter.CategoryFilter;
 import com.example.ungdungdocsach.Model.Category;
 import com.example.ungdungdocsach.databinding.RecCategoryBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,16 +28,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.HolderCategory> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.HolderCategory> implements Filterable {
     @NonNull
     private Context context;
-    private List<Category> categoryList;
+    public List<Category> categoryList, filterList;
     private FirebaseFirestore db;
     private RecCategoryBinding binding;
+    private CategoryFilter filter;
 
     public CategoryAdapter(@NonNull Context context, List<Category> categoryList) {
         this.context = context;
         this.categoryList = categoryList;
+        this.filterList = categoryList;
     }
 
     @NonNull
@@ -113,6 +118,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     @Override
     public int getItemCount() {
         return categoryList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new CategoryFilter(filterList, this);
+        }
+        return filter;
     }
 
 

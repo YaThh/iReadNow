@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -67,6 +69,28 @@ public class DashboardAdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 auth.signOut();
                 checkUser();
+            }
+        });
+
+        //Su kien tim kiem
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    categoryAdapter.getFilter().filter(charSequence);
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 

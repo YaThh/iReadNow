@@ -16,4 +16,5 @@
     <string name="dashboard">Bảng Điều Khiển</string>
     <string name="add_category">Thêm Danh Mục</string>
     <string name="adding_category">Đang thêm danh mục</string>
+    <string name="search">Tìm kiếm</string>
 </resources>
