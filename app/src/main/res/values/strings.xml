@@ -17,4 +17,9 @@
     <string name="add_category">Thêm Danh Mục</string>
     <string name="adding_category">Đang thêm danh mục</string>
     <string name="search">Tìm kiếm</string>
+    <string name="title">Tên Sách</string>
+    <string name="description">Mô Tả</string>
+    <string name="category">Danh Mục</string>
+    <string name="upload">Đăng Tải</string>
+    <string name="uploading_pdf">Đang tải lên pdf</string>
 </resources>

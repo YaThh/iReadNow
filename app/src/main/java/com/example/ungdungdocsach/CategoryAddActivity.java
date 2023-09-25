@@ -28,7 +28,6 @@ public class CategoryAddActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    private CategoryAdapter categoryAdapter;
     private Dialog addCategoryProgress;
 
     @Override
@@ -96,6 +95,7 @@ public class CategoryAddActivity extends AppCompatActivity {
 
                 Intent resultIntent = new Intent();
                 setResult(RESULT_OK, resultIntent);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

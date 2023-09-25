@@ -47,9 +47,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
         binding = ActivityDashboardAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //Set progressbar
-        binding.pBarAdmin.setVisibility(View.VISIBLE);
-        binding.recCategory.setVisibility(View.GONE);
+
 
         //Khoi tao auth
         auth = FirebaseAuth.getInstance();
@@ -61,6 +59,9 @@ public class DashboardAdminActivity extends AppCompatActivity {
         categoryAdapter = new CategoryAdapter(DashboardAdminActivity.this, categoryList);
         binding.recCategory.setAdapter(categoryAdapter);
 
+        //Set progressbar
+        binding.pBarAdmin.setVisibility(View.VISIBLE);
+        binding.recCategory.setVisibility(View.GONE);
         loadCategory();
 
         //Su kien logout
@@ -102,6 +103,14 @@ public class DashboardAdminActivity extends AppCompatActivity {
                 addCategoryLauncher.launch(i);
             }
         });
+
+        //Su kien them pdf
+        binding.btnAddPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardAdminActivity.this, PdfAddActivity.class));
+            }
+        });
     }
 
     private void loadCategory() {
@@ -118,6 +127,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
                 }
 
                 categoryAdapter.notifyDataSetChanged();
+
                 binding.pBarAdmin.setVisibility(View.GONE);
                 binding.recCategory.setVisibility(View.VISIBLE);
             }
