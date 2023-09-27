@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class PdfAddActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private ActivityResultLauncher<Intent> pdfPickLauncher;
     private Uri pdfUri = null;
-    private List<Category> categoryList;
+    private List<String> categoryTitleList, categoryIdList;
     private Dialog uploadProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,17 +106,16 @@ public class PdfAddActivity extends AppCompatActivity {
         });
     }
 
-    String title = "", description = "", category = "";
+    String title = "", description = "";
     private void submitValidate() {
         title = binding.edtTitle.getText().toString().trim();
         description = binding.edtDescription.getText().toString().trim();
-        category = binding.tvCategory.getText().toString().trim();
 
         if (title.isEmpty()) {
             Toast.makeText(PdfAddActivity.this, "Vui lòng nhập tên sách", Toast.LENGTH_SHORT).show();
         } else if (description.isEmpty()) {
             Toast.makeText(PdfAddActivity.this, "Vui lòng nhập mô tả", Toast.LENGTH_SHORT).show();
-        } else if (category.isEmpty()) {
+        } else if (selectedCategoryTitle.isEmpty()) {
             Toast.makeText(PdfAddActivity.this, "Vui lòng nhập danh mục", Toast.LENGTH_SHORT).show();
         } else if (pdfUri == null) {
             Toast.makeText(PdfAddActivity.this, "Vui lòng tải lên file pdf", Toast.LENGTH_SHORT).show();
@@ -163,7 +163,7 @@ public class PdfAddActivity extends AppCompatActivity {
         hashMap.put("id", timestamp);
         hashMap.put("title", title);
         hashMap.put("description", description);
-        hashMap.put("category", category);
+        hashMap.put("categoryId", selectedCategoryId);
         hashMap.put("url", pdfUrl);
         hashMap.put("timestamp", timestamp);
 
@@ -186,17 +186,25 @@ public class PdfAddActivity extends AppCompatActivity {
     }
 
     private void loadPdfCategory() {
-        categoryList = new ArrayList<>();
+        categoryTitleList = new ArrayList<>();
+        categoryIdList = new ArrayList<>();
 
         CollectionReference cateRef = db.collection("Category");
         cateRef.get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        categoryList.clear();
+                        categoryTitleList.clear();
+                        categoryIdList.clear();
+
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Category category = documentSnapshot.toObject(Category.class);
-                            categoryList.add(category);
+                            String categoryTitle = documentSnapshot.getString("category");
+                            String categoryId = documentSnapshot.getString("id");
+
+                            Log.d("CategoryTag", ""+ categoryTitle);
+
+                            categoryTitleList.add(categoryTitle);
+                            categoryIdList.add(categoryId);
                         }
                     }
                 })
@@ -208,11 +216,13 @@ public class PdfAddActivity extends AppCompatActivity {
                 });
     }
 
+    //Chon danh muc
+    private String selectedCategoryId = "", selectedCategoryTitle = "";
     private void categoryPickDiaglog() {
         //Lay chuoi tu list
-        String[] categoryName = new String[categoryList.size()];
-        for (int i = 0; i < categoryList.size(); i++) {
-            categoryName[i] = categoryList.get(i).getCategory();
+        String[] categoryName = new String[categoryTitleList.size()];
+        for (int i = 0; i < categoryTitleList.size(); i++) {
+            categoryName[i] = categoryTitleList.get(i);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -221,8 +231,9 @@ public class PdfAddActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Lay item duoc nhan tu list
-                        String category = categoryName[i];
-                        binding.tvCategory.setText(category);
+                        selectedCategoryTitle = categoryTitleList.get(i);
+                        selectedCategoryId = categoryIdList.get(i);
+                        binding.tvCategory.setText(selectedCategoryTitle);
                     }
                 })
                 .show();

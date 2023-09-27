@@ -22,4 +22,8 @@
     <string name="category">Danh Mục</string>
     <string name="upload">Đăng Tải</string>
     <string name="uploading_pdf">Đang tải lên pdf</string>
+    <string name="book_title">Tên Sách</string>
+    <string name="size">Kích Thước</string>
+    <string name="date_format">dd/MM/yyyy</string>
+    <string name="book">Sách</string>
 </resources>
