@@ -3,8 +3,8 @@ package com.example.ungdungdocsach.Model;
 import java.io.Serializable;
 
 public class Category {
-    String id, category, uid;
-    long timestamp;
+    private String id, category, uid;
+    private long timestamp;
 
     public Category() {
     }

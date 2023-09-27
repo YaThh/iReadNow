@@ -69,6 +69,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/edt_search"
         android:layout_marginTop="5dp"
+        android:layout_margin="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/rec_pdf_admin"/>
 </RelativeLayout>
