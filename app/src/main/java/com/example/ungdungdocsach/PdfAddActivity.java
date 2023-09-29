@@ -160,7 +160,7 @@ public class PdfAddActivity extends AppCompatActivity {
         //Setup du lieu
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("uid", uid);
-        hashMap.put("id", timestamp);
+        hashMap.put("id", String.valueOf(timestamp));
         hashMap.put("title", title);
         hashMap.put("description", description);
         hashMap.put("categoryId", selectedCategoryId);

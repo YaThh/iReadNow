@@ -3,6 +3,7 @@ package com.example.ungdungdocsach.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ungdungdocsach.Filter.CategoryFilter;
 import com.example.ungdungdocsach.Model.Category;
+import com.example.ungdungdocsach.PdfListAdminActivity;
 import com.example.ungdungdocsach.databinding.RecCategoryBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,6 +58,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         //Lay du lieu
         Category categoryModel = categoryList.get(position);
         String category = categoryModel.getCategory();
+        String id = categoryModel.getId();
         String uid = categoryModel.getUid();
         long timestamp = categoryModel.getTimestamp();
 
@@ -82,6 +85,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
                             }
                         })
                         .show();
+            }
+        });
+
+        //Su kien khi nhan vao 1 danh muc
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PdfListAdminActivity.class);
+                intent.putExtra("categoryId", id);
+                intent.putExtra("categoryTitle", category);
+                context.startActivity(intent);
             }
         });
     }
