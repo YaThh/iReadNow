@@ -157,6 +157,7 @@ public class PdfEditActivity extends AppCompatActivity {
 
     private void loadBookInfo() {
         CollectionReference bookRef = db.collection("Book");
+
         bookRef.whereEqualTo("id", bookId)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
