@@ -2,7 +2,9 @@ package com.example.ungdungdocsach.Adapter;
 
 import static com.example.ungdungdocsach.Utility.Constant.MAX_BYTES_PDF;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ungdungdocsach.Filter.BookFilter;
 import com.example.ungdungdocsach.Model.Book;
 import com.example.ungdungdocsach.PdfListAdminActivity;
+import com.example.ungdungdocsach.R;
 import com.example.ungdungdocsach.Utility.Convert;
 import com.example.ungdungdocsach.databinding.RecPdfAdminBinding;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -42,11 +46,17 @@ public class PdfAdminAdapter extends RecyclerView.Adapter<PdfAdminAdapter.Holder
     private BookFilter filter;
     private RecPdfAdminBinding binding;
     private FirebaseFirestore db;
+    private Dialog deleteProgress;
 
     public PdfAdminAdapter(Context context, List<Book> bookList) {
         this.context = context;
         this.bookList = bookList;
         this.filterList = bookList;
+
+        //Khoi tao progress dialog
+        deleteProgress = new Dialog(context);
+        deleteProgress.setContentView(R.layout.dialog_delete_book);
+        deleteProgress.setCancelable(false);
     }
 
     @NonNull
@@ -79,6 +89,92 @@ public class PdfAdminAdapter extends RecyclerView.Adapter<PdfAdminAdapter.Holder
         loadPdfFromUrl(book, holder);
         loadPdfSize(book, holder);
 
+        //Su kien xoa, sua
+        holder.btn_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                optionDialog(book, holder);
+            }
+        });
+
+    }
+
+    private void optionDialog(Book book, HolderPdfAdmin holder) {
+        String[] options = {"Sửa", "Xoá"};
+
+        //Alert diaglog
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Chức Năng")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                         if (i == 0) { //Su kien sua
+
+                         } else if (i == 1) { //Su kien xoa
+                             deleteBook(book, holder);
+                         }
+                    }
+                })
+                .show();
+    }
+
+    private void deleteBook(Book book, HolderPdfAdmin holder) {
+        String bookId = book.getId();
+        String bookUrl = book.getUrl();
+
+        deleteProgress.show();
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(bookUrl);
+        storageReference.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                         CollectionReference bookRef = db.collection("Book");
+                         bookRef.whereEqualTo("id", bookId)
+                                 .get()
+                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                     @Override
+                                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                             documentSnapshot.getReference()
+                                                     .delete()
+                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                         @Override
+                                                         public void onSuccess(Void unused) {
+                                                             int position = bookList.indexOf(book);
+                                                             if (position != -1) {
+                                                                 bookList.remove(position);
+                                                                 notifyItemRemoved(position);
+                                                             }
+                                                         }
+                                                     })
+                                                     .addOnFailureListener(new OnFailureListener() {
+                                                         @Override
+                                                         public void onFailure(@NonNull Exception e) {
+                                                             deleteProgress.dismiss();
+                                                             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                         }
+                                                     });
+                                             deleteProgress.dismiss();
+                                             Toast.makeText(context, "Xoá sách thành công", Toast.LENGTH_SHORT).show();
+                                         }
+                                     }
+                                 })
+                                 .addOnFailureListener(new OnFailureListener() {
+                                     @Override
+                                     public void onFailure(@NonNull Exception e) {
+                                         deleteProgress.dismiss();
+                                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                     }
+                                 });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void loadPdfSize(Book book, HolderPdfAdmin holder) {
