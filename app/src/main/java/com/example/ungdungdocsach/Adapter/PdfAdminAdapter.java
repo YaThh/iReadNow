@@ -124,6 +124,7 @@ public class PdfAdminAdapter extends RecyclerView.Adapter<PdfAdminAdapter.Holder
 
         deleteProgress.show();
 
+        //Xoa file trong storage
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(bookUrl);
         storageReference.delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
