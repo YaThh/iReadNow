@@ -217,6 +217,7 @@ public class PdfEditActivity extends AppCompatActivity {
                         categoryIdList.clear();
 
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            //Lay thong tin danh muc tu db
                             String categoryTitle = documentSnapshot.getString("category");
                             String categoryId = documentSnapshot.getString("id");
 
