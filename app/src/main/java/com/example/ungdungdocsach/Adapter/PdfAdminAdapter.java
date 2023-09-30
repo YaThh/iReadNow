@@ -5,6 +5,7 @@ import static com.example.ungdungdocsach.Utility.Constant.MAX_BYTES_PDF;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ungdungdocsach.Filter.BookFilter;
 import com.example.ungdungdocsach.Model.Book;
+import com.example.ungdungdocsach.PdfEditActivity;
 import com.example.ungdungdocsach.PdfListAdminActivity;
 import com.example.ungdungdocsach.R;
 import com.example.ungdungdocsach.Utility.Convert;
@@ -100,6 +102,9 @@ public class PdfAdminAdapter extends RecyclerView.Adapter<PdfAdminAdapter.Holder
     }
 
     private void optionDialog(Book book, HolderPdfAdmin holder) {
+        String bookId = book.getId();
+        String bookUrl = book.getUrl();
+
         String[] options = {"Sửa", "Xoá"};
 
         //Alert diaglog
@@ -109,6 +114,9 @@ public class PdfAdminAdapter extends RecyclerView.Adapter<PdfAdminAdapter.Holder
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                          if (i == 0) { //Su kien sua
+                             Intent intent = new Intent(context, PdfEditActivity.class);
+                             intent.putExtra("bookId", bookId);
+                             context.startActivity(intent);
 
                          } else if (i == 1) { //Su kien xoa
                              deleteBook(book, holder);

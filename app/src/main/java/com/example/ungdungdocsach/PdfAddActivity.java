@@ -201,8 +201,6 @@ public class PdfAddActivity extends AppCompatActivity {
                             String categoryTitle = documentSnapshot.getString("category");
                             String categoryId = documentSnapshot.getString("id");
 
-                            Log.d("CategoryTag", ""+ categoryTitle);
-
                             categoryTitleList.add(categoryTitle);
                             categoryIdList.add(categoryId);
                         }

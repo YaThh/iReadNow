@@ -15,6 +15,9 @@
         android:theme="@style/Theme.UngDungDocSach"
         tools:targetApi="31">
         <activity
+            android:name=".PdfEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".PdfListAdminActivity"
             android:exported="false" />
         <activity

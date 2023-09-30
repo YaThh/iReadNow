@@ -27,4 +27,7 @@
     <string name="date_format">dd/MM/yyyy</string>
     <string name="book">Sách</string>
     <string name="deleting">Đang xoá</string>
+    <string name="edit_book">Sửa Thông Tin Sách</string>
+    <string name="update">Cập Nhật</string>
+    <string name="updating">Đang Cập Nhật</string>
 </resources>

@@ -39,7 +39,7 @@ public class PdfListAdminActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        //Lay du lieu tu intent
+        //Lay du lieu tu intent CategoryAdapter
         Intent intent = getIntent();
         categoryId = intent.getStringExtra("categoryId");
         categoryTitle =  intent.getStringExtra("categoryTitle");
